@@ -1130,13 +1130,13 @@ html.dark :deep(.el-form-item__label) {
 @media (max-width: 768px) {
   .app-wrapper {
     flex-direction: column;
-    padding: 20px;
+    /* padding: 20px; */
     justify-content: flex-start;
   }
 
   .server-status-container {
     position: static;
-    width: 100%;
+    width: 85%;
     max-width: none;
     margin-top: 20px;
     transform: none;
@@ -1144,9 +1144,9 @@ html.dark :deep(.el-form-item__label) {
   }
 
   .form-container {
-    margin-top: 0;
+    margin-top: 40px;
     order: 1;
-    width: 100%;
+    width: 80%;
   }
 
   /* 移除表单焦点时的服务器状态容器样式 */
@@ -1158,9 +1158,6 @@ html.dark :deep(.el-form-item__label) {
 
 /* 特小屏幕适配 */
 @media (max-width: 360px) {
-  .app-wrapper {
-    padding: 15px;
-  }
 
   .view-members-btn {
     right: 10px;
@@ -1175,10 +1172,12 @@ html.dark :deep(.el-form-item__label) {
 
   .form-container {
     padding: 20px;
+    width: 60%;
   }
 
   .server-status-container {
     margin-top: 15px;
+    width: 60%;
   }
 }
 
