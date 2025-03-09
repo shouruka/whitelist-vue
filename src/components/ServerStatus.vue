@@ -1,64 +1,66 @@
 <template>
-  <div class="server-status-page">
-    <div class="header">
-      <el-button class="back-btn" @click="$router.push('/')" text>
-        <el-icon><Back /></el-icon>
-        返回
-      </el-button>
-      <h2>服务器状态</h2>
-      <el-button
-        :loading="loading"
-        class="refresh-btn"
-        @click="refreshStatus"
-      >
-        <el-icon><Refresh /></el-icon>
-        刷新
-      </el-button>
-    </div>
-
-    <div class="servers-container">
-      <div v-if="loading" class="loading-state">
-        <el-icon class="loading-icon"><Loading /></el-icon>
-        <span>加载中...</span>
+  <div class="status-page">
+    <div class="server-status-page">
+      <div class="header">
+        <el-button class="back-btn" @click="$router.push('/')" text>
+          <el-icon><Back /></el-icon>
+          返回
+        </el-button>
+        <h2>服务器状态</h2>
+        <el-button
+          :loading="loading"
+          class="refresh-btn"
+          @click="refreshStatus"
+        >
+          <el-icon><Refresh /></el-icon>
+          刷新
+        </el-button>
       </div>
 
-      <template v-else>
-        <div v-for="server in servers"
-             :key="server.name"
-             class="server-card animate-in">
-          <div class="server-header">
-            <div class="server-name">
-              <el-icon><Monitor /></el-icon>
-              {{ server.name }}
+      <div class="servers-container">
+        <div v-if="loading" class="loading-state">
+          <el-icon class="loading-icon"><Loading /></el-icon>
+          <span>加载中...</span>
+        </div>
+
+        <template v-else>
+          <div v-for="server in servers"
+               :key="server.name"
+               class="server-card animate-in">
+            <div class="server-header">
+              <div class="server-name">
+                <el-icon><Monitor /></el-icon>
+                {{ server.name }}
+              </div>
+              <div class="player-count">
+                <el-icon><User /></el-icon>
+                在线: {{ server.playerCount }}
+              </div>
             </div>
-            <div class="player-count">
-              <el-icon><User /></el-icon>
-              在线: {{ server.playerCount }}
+
+            <div v-if="server.players.length > 0" class="players-section">
+              <div class="players-container">
+                <el-tag
+                  v-for="player in server.players"
+                  :key="player"
+                  class="player-tag"
+                  effect="light"
+                >
+                  {{ player }}
+                </el-tag>
+              </div>
+            </div>
+            <div v-else class="no-players">
+              暂无在线玩家
             </div>
           </div>
 
-          <div v-if="server.players.length > 0" class="players-section">
-            <div class="players-container">
-              <el-tag
-                v-for="player in server.players"
-                :key="player"
-                class="player-tag"
-                effect="light"
-              >
-                {{ player }}
-              </el-tag>
-            </div>
+          <div class="query-time">
+            <el-icon><Timer /></el-icon>
+            {{ queryTime }}
           </div>
-          <div v-else class="no-players">
-            暂无在线玩家
-          </div>
-        </div>
-
-        <div class="query-time">
-          <el-icon><Timer /></el-icon>
-          {{ queryTime }}
-        </div>
-      </template>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -122,12 +124,21 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.server-status-page {
-  min-height: 100vh;
-  padding: 20px;
+.status-page {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
   background-image: var(--theme-gradient);
   background-size: 400% 400%;
   animation: warmGradient 20s ease infinite;
+}
+
+.server-status-page {
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding: 20px;
   font-family: 'CustomFont', sans-serif;
 }
 
